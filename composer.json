@@ -1,0 +1,25 @@
+{
+    "name": "cichowski/sentinel-scaffolding",
+    "description": "Base scaffolding for Cartalyst Sentinel package",
+    "license": "Beerware",
+    "authors": [
+        {
+            "name": "Dariusz Cichowski",
+            "email": "dariusz.cichowski@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": ">=5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cichowski\\SentinelScaffolding\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }    
+}
