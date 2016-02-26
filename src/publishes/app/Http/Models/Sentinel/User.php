@@ -1,15 +1,16 @@
 <?php
-
 /**
  *  Extension of Cartalyst Sentinel model
  */
-
 namespace App\Models\Sentinel;
 
 use Cartalyst\Sentinel\Users\EloquentUser;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends EloquentUser
 {
+    use SoftDeletes;
+    
     /**
      * {@inheritDoc}
      */
@@ -79,4 +80,14 @@ class User extends EloquentUser
 
         parent::__construct();
     }
+    
+    /**
+     * {@inheritDoc}
+     */ 
+    public function roles()
+    {
+        $pivotTable = strval(config('cartalyst.sentinel.prefix')) . 'role_users';
+        
+        return $this->belongsToMany(static::$rolesModel, $pivotTable, 'user_id', 'role_id')->withTimestamps();
+    }     
 }

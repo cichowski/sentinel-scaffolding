@@ -1,4 +1,5 @@
-<?php namespace App\Http\Requests\Sentinel;
+<?php 
+namespace App\Http\Requests\Sentinel;
 
 use App\Http\Requests\Request;
 use App\Models\Sentinel\User;

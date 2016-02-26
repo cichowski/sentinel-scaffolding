@@ -1,9 +1,11 @@
-<?php namespace App\Http\Controllers\Sentinel;
+<?php 
+namespace App\Http\Controllers\Sentinel;
 
 use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Sentinel\RetrievePasswordRequest;
 use App\Http\Requests\Sentinel\SetPasswordRequest;
-use Sentinel, Reminder;
+use Sentinel
+use Reminder;
 use Request;
 use Mail;
 use View;

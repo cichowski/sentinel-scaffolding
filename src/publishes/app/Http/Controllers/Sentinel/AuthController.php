@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Sentinel;
+<?php 
+namespace App\Http\Controllers\Sentinel;
 
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
@@ -6,7 +7,10 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Sentinel\LoginRequest;
 use App\Http\Requests\Sentinel\RegisterRequest;
 use App\Models\Sentinel\User;
-use Sentinel, Activation;
+use App\Models\Country;
+use App\Models\Distributor;
+use Sentinel;
+use Activation;
 use Request;
 use Mail;
 use View;

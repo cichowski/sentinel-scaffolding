@@ -1,10 +1,8 @@
 <?php
-
 /**
  *  Extension of Cartalyst Sentinel model
  */
-
-namespace App\Models\Sentinel;
+namespace App\Models\Sentinel;;
 
 use Cartalyst\Sentinel\Throttling\EloquentThrottle;
 
