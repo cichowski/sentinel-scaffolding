@@ -14,7 +14,12 @@ Route::group(['namespace' => 'Sentinel'], function()
         Route::get('/login', array(
             'as' => 'auth.login',             
             'uses' => 'AuthController@login'
-        ));  
+        )); 
+        
+        Route::get('/init', array(
+            'as' => 'auth.init',             
+            'uses' => 'AuthController@init'
+        ));         
 
         //This action is throttled by the controller
         Route::post('/login', array(

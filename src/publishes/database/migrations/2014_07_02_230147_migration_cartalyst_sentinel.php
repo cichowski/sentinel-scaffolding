@@ -23,7 +23,10 @@ use Illuminate\Database\Schema\Blueprint;
 
 class MigrationCartalystSentinel extends Migration
 {
-    private $suffix = '_support';
+    private function getPrefix()
+    {
+        return strval(config('cartalyst.sentinel.prefix'));
+    }
     
     /**
      * Run the migrations.
@@ -32,7 +35,7 @@ class MigrationCartalystSentinel extends Migration
      */
     public function up()
     {
-        Schema::create('activations' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'activations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code');
@@ -43,7 +46,7 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
         });
 
-        Schema::create('persistences' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'persistences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code');
@@ -53,7 +56,7 @@ class MigrationCartalystSentinel extends Migration
             $table->unique('code');
         });
 
-        Schema::create('reminders' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'reminders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code');
@@ -62,7 +65,7 @@ class MigrationCartalystSentinel extends Migration
             $table->timestamps();
         });
 
-        Schema::create('roles' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->string('name');
@@ -74,7 +77,7 @@ class MigrationCartalystSentinel extends Migration
             $table->unique('slug');
         });
 
-        Schema::create('role_users' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'role_users', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->nullableTimestamps();
@@ -83,7 +86,7 @@ class MigrationCartalystSentinel extends Migration
             $table->primary(['user_id', 'role_id']);
         });
 
-        Schema::create('throttle' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'throttle', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('type');
@@ -94,7 +97,7 @@ class MigrationCartalystSentinel extends Migration
             $table->index('user_id');
         });
 
-        Schema::create('users' . $this->suffix, function (Blueprint $table) {
+        Schema::create($this->getPrefix() . 'users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
             $table->string('username');
@@ -118,12 +121,12 @@ class MigrationCartalystSentinel extends Migration
      */
     public function down()
     {
-        Schema::drop('activations' . $this->suffix);
-        Schema::drop('persistences' . $this->suffix);
-        Schema::drop('reminders' . $this->suffix);
-        Schema::drop('roles' . $this->suffix);
-        Schema::drop('role_users' . $this->suffix);
-        Schema::drop('throttle' . $this->suffix);
-        Schema::drop('users' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'activations' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'persistences' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'reminders' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'roles' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'role_users' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'throttle' . $this->suffix);
+        Schema::drop($this->getPrefix() . 'users' . $this->suffix);
     }
 }

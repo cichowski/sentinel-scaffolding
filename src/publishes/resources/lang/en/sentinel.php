@@ -15,6 +15,7 @@ return [
     ],    
     
     'fields' => [
+        'role' => 'role',
         'username' => 'username',
         'email' => 'e-mail address',
         'password' => 'password',

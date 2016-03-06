@@ -32,10 +32,10 @@ class Activation extends EloquentActivation
     /**
      * {@inheritDoc}
      */    
-    public function __construct() 
+    public function __construct(array $attributes = []) 
     {        
         $this->table = strval(config('cartalyst.sentinel.prefix')) . $this->table;
 
-        parent::__construct();
-    }    
+        parent::__construct($attributes);
+    }   
 }

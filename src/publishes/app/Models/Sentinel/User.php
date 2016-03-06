@@ -21,8 +21,8 @@ class User extends EloquentUser
      */
     protected $fillable = [
         'email',
-        'username',
         'password',
+        'name',
         'last_name',
         'first_name',
         'permissions',
@@ -33,7 +33,7 @@ class User extends EloquentUser
      *
      * @var array
      */
-    protected $loginNames = ['email', 'username'];    
+    protected $loginNames = ['email'];    
     
     /**
      * The Eloquent roles model name.
@@ -74,11 +74,11 @@ class User extends EloquentUser
     /**
      * {@inheritDoc}
      */    
-    public function __construct() 
+    public function __construct(array $attributes = []) 
     {        
         $this->table = strval(config('cartalyst.sentinel.prefix')) . $this->table;
 
-        parent::__construct();
+        parent::__construct($attributes);
     }
     
     /**

@@ -7,13 +7,12 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Sentinel\LoginRequest;
 use App\Http\Requests\Sentinel\RegisterRequest;
 use App\Models\Sentinel\User;
-use App\Models\Country;
-use App\Models\Distributor;
 use Sentinel;
 use Activation;
 use Request;
 use Mail;
 use View;
+use App\Models\Reservation;
 
 class AuthController extends BaseController 
 {  
@@ -67,10 +66,10 @@ class AuthController extends BaseController
      * @return \Illuminate\View\View
      */
     public function register()
-    {  
-        $userTypes = User::$userTypes;        
+    {   
+        $roles = Sentinel::getRoleRepository()->all()->lists('slug', 'name');
         
-        return View::make('sentinel.auth.register', compact('userTypes'));
+        return View::make('sentinel.auth.register')->with('roles', $roles);
     }
     
     /**
@@ -80,18 +79,22 @@ class AuthController extends BaseController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function processRegistration(RegisterRequest $request)
-    { 
+    {         
         if (Request::ajax()) {
             return response()->json( array(
                 'status' => 'ok',
             ));
-        }         
+        }          
         
-        $user = Sentinel::register($request->all());
+        $user = Sentinel::register($request->all());        
         
         if ($user) {
             
-            $activation = Activation::createIfNotExists($user);
+            $role = Sentinel::findRoleBySlug($request->get('role'));
+            
+            $role->users()->attach($user);
+            
+            $activation = Activation::createIfNotExists($user);                       
             
             $sent = Mail::send('sentinel.emails.activate', compact('user', 'activation'), function($m) use ($user)
             {
@@ -132,5 +135,27 @@ class AuthController extends BaseController
         Sentinel::logout();
         
         return redirect()->route('auth.login');                
-    }    
+    } 
+    
+    public function init()
+    {         
+        if ( ! User::all()->count()) {
+            
+            $initialRoleName = 'Admin';                        
+            
+            $role = Sentinel::findRoleByName($initialRoleName);
+            
+            if ( ! $role) {
+                
+                $role = Sentinel::getRoleRepository()->createModel()->create([
+                    'name' => $initialRoleName,
+                    'slug' => strtolower($initialRoleName),
+                ]);
+            }            
+            
+            return View::make('sentinel.auth.register')->with('role', $role);
+        }
+        
+        abort(404);
+    }
 }
