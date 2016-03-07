@@ -79,4 +79,30 @@ Route::group(['namespace' => 'Sentinel'], function()
             'uses' => 'AuthController@logout'
         )); 
     });
+    
+    /**
+     * Actions for logged in users
+     */
+    Route::group(['middleware' => ['web', 'auth']], function () 
+    {
+        Route::get('/account/profile', array(
+            'as' => 'account.edit',             
+            'uses' => 'AccountController@edit'
+        ));
+
+        Route::post('/account/profile', array(
+            'as' => 'account.update',             
+            'uses' => 'AccountController@update'
+        ));   
+
+        Route::get('/account/password', array(
+            'as' => 'account.password',             
+            'uses' => 'AccountController@changePassword'
+        ));
+        
+        Route::post('/account/password', array(
+            'as' => 'account.password_request',             
+            'uses' => 'AccountController@saveNewPassword'
+        ));
+    });    
 });    

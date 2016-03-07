@@ -89,5 +89,12 @@ class User extends EloquentUser
         $pivotTable = strval(config('cartalyst.sentinel.prefix')) . 'role_users';
         
         return $this->belongsToMany(static::$rolesModel, $pivotTable, 'user_id', 'role_id')->withTimestamps();
-    }     
+    } 
+    
+    public function setPassword($newPassword)
+    {
+        $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
+        
+        return $this->save();
+    }        
 }
