@@ -27,7 +27,7 @@ class RegisterRequest extends Request
             'role'          => 'exists:roles,slug',
             'username'      => 'required|unique:users',
             'email'         => 'required|email|unique:users',
-            'password'      => 'required',
+            'password'      => 'required|min:8',
             'password_confirmation' => 'required|same:password',                                    
         ];
     }

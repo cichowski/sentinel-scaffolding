@@ -43,6 +43,7 @@ return [
         'account-created' => 'Your accout was successfully created. Please waint for activation e-mail.',
         'activated' => 'Your accout has been activated. You might login now.',
         'password-set' => 'New password has been set',
-        'retrieve' => 'Please check Your email. We sent You further instructions.'
+        'retrieve' => 'Please check Your email. We sent You further instructions.',
+        'success' => 'Your changes have been saved.',
     ],    
 ];

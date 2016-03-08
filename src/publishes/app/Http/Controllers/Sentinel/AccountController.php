@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Sentinel;
 
 use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Sentinel\UserRequest;
-use App\Http\Requests\Sentinel\SetPasswordRequest;
+use App\Http\Requests\Sentinel\ChangePasswordRequest;
 use View;
 use Sentinel;
 use Request;
@@ -40,17 +40,22 @@ class AccountController extends BaseController
         return View::make('sentinel.account.password');
     }
     
-    public function saveNewPassword(SetPasswordRequest $request)
+    public function saveNewPassword(ChangePasswordRequest $request)
     {        
         if (Request::ajax()) {
             return $this->jsonResponseOk();
         }
         
-        if (! Sentinel::getUser()->setPassword($request->get('password'))) {
-            
-            return redirect()->back();
-        }        
+        $user = Sentinel::getUser();
         
-        return redirect()->route('account.password');        
+        if (Sentinel::validateCredentials($user, ['password' => $request->get('password_old')])) {
+        
+            if ($user->setPassword($request->get('password_new'))) {
+
+                return redirect()->route('account.password')->with('message', trans('sentinel.messages.success'));        
+            }                   
+        }
+        
+        return redirect()->back()->with('message', trans('sentinel.errors.password-set'));
     }
 }

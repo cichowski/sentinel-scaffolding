@@ -43,6 +43,7 @@ return [
         'account-created' => 'Konto zostało utworzone. Niedługo otrzymasz e-mail z linkiem aktywacyjnym.',
         'activated' => 'Twoje konto jest teraz aktywno. Możesz się zalogować.',
         'password-set' => 'Nowe hasło zostało ustawione.',
-        'retrieve' => 'Na Twój adres e-mail wysłaliśmy dalsze instrukcje.'
+        'retrieve' => 'Na Twój adres e-mail wysłaliśmy dalsze instrukcje.',
+        'success' => 'Twoje zmiany zostały zapisane.',
     ],    
 ];

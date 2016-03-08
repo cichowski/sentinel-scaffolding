@@ -3,7 +3,7 @@ namespace App\Http\Requests\Sentinel;
 
 use App\Http\Requests\Request;
 
-class SetPasswordRequest extends Request
+class ChangePasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class SetPasswordRequest extends Request
     public function rules()
     {
         return [
-            'password' => 'required|min:8',
-            'password_confirm' => 'required|same:password',
+            'password_old' => 'required',
+            'password_new' => 'required|min:8',
+            'password_confirm' => 'required|same:password_new',
         ];
     }
     
